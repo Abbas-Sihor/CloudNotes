@@ -1,5 +1,4 @@
 const connectToMongo = require("./db");
-
 connectToMongo();
 const express = require("express");
 const app = express();
