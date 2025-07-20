@@ -1,10 +1,10 @@
+require("dotenv").config();
 const connectToMongo = require("./db");
 
 connectToMongo();
-
 const express = require("express");
 const app = express();
-const port = 5000;
+const port = process.env.PORT
 //availabe routes
 
 app.use(express.json());
@@ -16,5 +16,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(port, () => {
-	console.log(`Example app listening on port ${port}`);
+	console.log(`Example app listening on port 5000`);
 });
