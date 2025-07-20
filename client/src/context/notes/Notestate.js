@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import noteContext from "./notecontext";
 
-const host ="http://localhost:5000/"
+const host =process.env.REACT_APP_PORT
 
 const notesinitial = [];
 const userinitial = [];

@@ -11,7 +11,7 @@ const Signup = () => {
   const [error, seterror] = useState({name:'',email:'',password:''});
 
 
-	
+	const port = process.env.REACT_APP_PORT
 	const handleSubmit=async (e)=>{
 		e.preventDefault()
 			const error=(validation(credentials))
@@ -19,7 +19,7 @@ const Signup = () => {
 			if(Object.keys(error).length > 0){
 				return
 			}
-			const response = await fetch(`http://localhost:5000/api/auth/signup`, {
+			const response = await fetch(`${port}api/auth/signup`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",

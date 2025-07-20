@@ -1,15 +1,16 @@
 import React,{useState,useContext} from "react";
 import {useNavigate } from "react-router-dom";
 import noteContext from "../context/notes/notecontext";
+
 const Login = () => {
 let navigate=useNavigate()
 const context = useContext(noteContext);
 const { logout,setlogout} = context;
-
+const port = process.env.REACT_APP_PORT
   const [credentials, setcredentials] = useState({email:'',password:''});
 	const handleClick=async (e)=>{
 		e.preventDefault()
-	  const response = await fetch(`http://localhost:5000/api/auth/login`, {
+	  const response = await fetch(`${port}api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
