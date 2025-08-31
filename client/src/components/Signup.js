@@ -9,14 +9,17 @@ const Signup = () => {
   let navigate=useNavigate()
   const [credentials, setcredentials] = useState({name:'',email:'',password:''});
   const [error, seterror] = useState({name:'',email:'',password:''});
+	const [loading,setLoading]=useState(false)
 
 
 	const port = process.env.REACT_APP_PORT
 	const handleSubmit=async (e)=>{
 		e.preventDefault()
+		setLoading(true)
 			const error=(validation(credentials))
 			seterror(error)
 			if(Object.keys(error).length > 0){
+				setLoading(false)
 				return
 			}
 			const response = await fetch(`${port}api/auth/signup`, {
@@ -29,13 +32,16 @@ const Signup = () => {
     const json= await response.json(); 
 		console.log(json)
     if (json.success) {
+			setLoading(false)
 			localStorage.setItem('token' , json.token);
       setlogout(false)
       navigate("/")
     }
     else{
+			setLoading(false)
 			alert("login with correct credentials")
     }
+		setLoading(false)
 	}
 
 
@@ -94,8 +100,8 @@ const onchange=(e)=>{
 					{error.password&& <p style={{color:"red"}}>{error.password}</p>}
 				</div>
 
-				<button type="submit" className="btn btn-primary">
-					Submit
+				<button type="submit" className="btn btn-primary"disabled={loading}>
+					{loading?"Please wait":"Submit"}
 				</button>
 			</form>
 			<p>Already have an account <a href="/login">Click here</a></p>

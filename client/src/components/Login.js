@@ -8,8 +8,10 @@ const context = useContext(noteContext);
 const { logout,setlogout} = context;
 const port = process.env.REACT_APP_PORT
   const [credentials, setcredentials] = useState({email:'',password:''});
+	const [loading ,setLoading]=useState(false)
 	const handleClick=async (e)=>{
 		e.preventDefault()
+		setLoading(true)
 	  const response = await fetch(`${port}api/auth/login`, {
       method: "POST",
       headers: {
@@ -20,11 +22,13 @@ const port = process.env.REACT_APP_PORT
     const json= await response.json(); 
 		console.log(json)
     if (json.success) {
+			setLoading(false)
 			setlogout(false)
       localStorage.setItem('token' , json.token);
       navigate("/")
     }
     else{
+			setLoading(false)
       alert("login with correct credentials")
     }
 	}
@@ -69,8 +73,8 @@ const port = process.env.REACT_APP_PORT
 					/>
 				</div>
 
-				<button type="submit" className="btn btn-primary" onClick={handleClick}>
-					Submit
+				<button type="submit" className="btn btn-primary" onClick={handleClick} disabled={loading}>
+					{loading?"Please wait":"Submit"}
 				</button>
 			</form>
 			<p>Don't have an account <a href="/signup">Click here</a></p>
